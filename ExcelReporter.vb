@@ -2502,7 +2502,7 @@ ErrHandler:
 
     End Sub
     Sub OutMooringAQWATab(ByRef oxApp As Microsoft.Office.Interop.Excel.Application, ByRef oVessel As Vessel, Optional ByRef MoorSystem As MoorSystem = Nothing)
-        Dim Row, i, NumLines As Short
+        Dim i, NumLines As Short
         Dim CurLine As MoorLine
 
         Dim j As Short
@@ -2517,33 +2517,19 @@ ErrHandler:
         WD = oVessel.WaterDepth
 
         With oxApp.Sheets("Mooring")
+            .Range("A1:J100").clear()
 
-            Dim i As Integer, j As Integer
-            Dim Keyword As String, Entry As String, InputFile As String
-            Dim FileNum As Integer
-
-            Dim NumLine As Integer, NumSeg As Integer
-            Dim Scope As Single, Payout As Single, TopTen As Single
-            Dim PayoutSur As Single, PayoutOpr As Single
-            Dim PretenSur As Single, PretenOpr As Single
-            Dim SprdAng As Single, FLX As Single, FLY As Single, FLZ As Single
-            Dim AnchorX As Single, AnchorY As Single, WaterDepth As Single, BtmSlp As String
-            Dim AnchModel As String, HoldCap As Single, AnchRemark As String
-            Dim WinchCap As Single
-
-            Dim SegTp(24) As String, Lg(24) As Single, TLg(24) As Single, dia(24) As Single
-            Dim BS(24) As Single, E1(24) As Single, E2(24) As Single
-            Dim DryWt(24) As Single, WetWt(24) As Single, Buoy(24) As Single, BuoyL(24) As Single
-            Dim FrCoef(24) As Single
+            .cells.font.name = "Courier New"
+            .cells.font.size = 9
 
             Dim CurRow As Integer
             CurRow = 1
-            For i = 1 To NumLine
-
+            For i = 1 To NumLines
+                CurLine = oVessel.MoorSystem.MoorLines(i)
                 .Cells(CurRow, 1) = "14COMP"
                 .Cells(CurRow, 2) = 3
                 .Cells(CurRow, 3) = 20
-                .Cells(CurRow, 5) = NumSeg
+                .Cells(CurRow, 5) = CurLine.SegmentCount
                 .Cells(CurRow, 6) = WD - 30.0#
                 .Cells(CurRow, 6).NumberFormat = "0"
                 .Cells(CurRow, 7) = WD + 30.0#
@@ -2551,21 +2537,20 @@ ErrHandler:
                 .Cells(CurRow, 8) = 0#
                 .Cells(CurRow, 8).NumberFormat = "0"
                 CurRow = CurRow + 1
-                CurLine = oVessel.MoorSystem.MoorLines(i)
                 For j = CurLine.SegmentCount To 1 Step -1
                     .Cells(CurRow, 1) = "14ECAT"
-                    .Cells(CurRow, 6) = DryWt(j) / 32.18
+                    .Cells(CurRow, 6) = CurLine.Segments(j).UnitDryWeight / 32.18
                     .Cells(CurRow, 6).NumberFormat = "0.0000"
-                    .Cells(CurRow, 7) = (DryWt(j) - WetWt(j)) / 32.18 / 1.99
+                    .Cells(CurRow, 7) = (CurLine.Segments(j).UnitDryWeight - CurLine.Segments(j).UnitWetWeight) / 32.18 / 1.99
                     .Cells(CurRow, 7).NumberFormat = "0.0000"
-                    .Cells(CurRow, 8) = 3.1415926 * dia(j) ^ 2 / 4 * E1(j)
+                    .Cells(CurRow, 8) = 3.1415926 * CurLine.Segments(j).Diameter ^ 2 / 4 * CurLine.Segments(j).E1
                     .Cells(CurRow, 8).NumberFormat = "0.000E+00"
-                    .Cells(CurRow, 9) = BS(j)
+                    .Cells(CurRow, 9) = CurLine.Segments(j).BS
                     .Cells(CurRow, 9).NumberFormat = "0.000E+00"
                     If j = 1 Then
-                        .Cells(CurRow, 10) = Sheets("Summary").Cells(i + 6, 12)
+                        .Cells(CurRow, 10) = CurLine.Payout
                     Else
-                        .Cells(CurRow, 10) = Lg(j)
+                        .Cells(CurRow, 10) = CurLine.Segments(j).Length
                     End If
                     .Cells(CurRow, 10).NumberFormat = "0.0"
                     CurRow = CurRow + 1
@@ -2573,7 +2558,7 @@ ErrHandler:
                     .Cells(CurRow, 1) = "14ECAH"
                     .Cells(CurRow, 6) = 1.0#
                     .Cells(CurRow, 6).NumberFormat = "0.0"
-                    If Left(SegTp(j), 4) = "CHAI" Then
+                    If Left(CurLine.Segments(j).SegType, 4) = "CHAI" Then
                         .Cells(CurRow, 8) = 2.4
                         .Cells(CurRow, 10) = 0.1
                     Else
@@ -2582,125 +2567,41 @@ ErrHandler:
                     End If
                     .Cells(CurRow, 8).NumberFormat = "0.0"
                     .Cells(CurRow, 10).NumberFormat = "0.000"
-                    .Cells(CurRow, 9) = dia(j) / 12
+                    .Cells(CurRow, 9) = CurLine.Segments(j).Diameter / 12
                     .Cells(CurRow, 9).NumberFormat = "0.0000"
                     CurRow = CurRow + 1
                 Next j
 
-                If i = NumLine Then
-                        .Cells(CurRow, 1) = "END14NLID"
-                    Else
-                        .Cells(CurRow, 1) = "14NLID"
-                    End If
-                Next
-            Next i
-            Input #FileNum, Scope, Payout, TopTen, PayoutSur, PretenSur,
-                    PayoutOpr, PretenOpr, WinchCap
-        Input #FileNum, SprdAng, FLX, FLY, FLZ
-
-        Input #FileNum, AnchorX, AnchorY, WaterDepth, BtmSlp
-        Input #FileNum, AnchModel, HoldCap, AnchRemark
-
-        Input #FileNum, NumSeg
-            InputFile = Sheets("Summary").Cells(26, 2)
-            WD = Sheets("Summary").Cells(2, 3)
-
-            FileNum = FreeFile()
-            CurRow = 12
-
-            Sheets("AQWA").Select
-            Range("A12").Select
-            Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
-            Selection.ClearContents
-            Range("A1").Select
-
-            Open InputFile For Input Access Read As FileNum
-
-    Do
-                Line Input #FileNum, Keyword
-        Keyword = Trim(Keyword)
-            Loop While Keyword <> "[Mooring Lines]"
-
-            Input #FileNum, NumLine
-    For i = 1 To NumLine
-                Input #FileNum, Scope, Payout, TopTen, PayoutSur, PretenSur,
-                PayoutOpr, PretenOpr, WinchCap
-        Input #FileNum, SprdAng, FLX, FLY, FLZ
-
-        Input #FileNum, AnchorX, AnchorY, WaterDepth, BtmSlp
-        Input #FileNum, AnchModel, HoldCap, AnchRemark
-
-        Input #FileNum, NumSeg
-
-
-                    .Cells(CurRow, 1) = "14COMP"
-                .Cells(CurRow, 2) = 3
-                .Cells(CurRow, 3) = 20
-                .Cells(CurRow, 5) = NumSeg
-                .Cells(CurRow, 6) = WD - 30.0#
-                .Cells(CurRow, 6).NumberFormat = "0"
-                .Cells(CurRow, 7) = WD + 30.0#
-                .Cells(CurRow, 7).NumberFormat = "0"
-                .Cells(CurRow, 8) = 0#
-                .Cells(CurRow, 8).NumberFormat = "0"
-                CurRow = CurRow + 1
-
-                For j = 1 To NumSeg
-                    Input #FileNum, SegTp(j), Lg(j), TLg(j), dia(j), BS(j), E1(j), E2(j), DryWt(j), WetWt(j),
-                        Buoy(j), BuoyL(j), FrCoef(j)
-            Next j
-
-                For j = NumSeg To 1 Step -1
-                    .Cells(CurRow, 1) = "14ECAT"
-                    .Cells(CurRow, 6) = DryWt(j) / 32.18
-                    .Cells(CurRow, 6).NumberFormat = "0.0000"
-                    .Cells(CurRow, 7) = (DryWt(j) - WetWt(j)) / 32.18 / 1.99
-                    .Cells(CurRow, 7).NumberFormat = "0.0000"
-                    .Cells(CurRow, 8) = 3.1415926 * dia(j) ^ 2 / 4 * E1(j)
-                    .Cells(CurRow, 8).NumberFormat = "0.000E+00"
-                    .Cells(CurRow, 9) = BS(j)
-                    .Cells(CurRow, 9).NumberFormat = "0.000E+00"
-                    If j = 1 Then
-                        .Cells(CurRow, 10) = Sheets("Summary").Cells(i + 6, 12)
-                    Else
-                        .Cells(CurRow, 10) = Lg(j)
-                    End If
-                    .Cells(CurRow, 10).NumberFormat = "0.0"
-                    CurRow = CurRow + 1
-
-                    .Cells(CurRow, 1) = "14ECAH"
-                    .Cells(CurRow, 6) = 1.0#
-                    .Cells(CurRow, 6).NumberFormat = "0.0"
-                    If Left(SegTp(j), 4) = "CHAI" Then
-                        .Cells(CurRow, 8) = 2.4
-                        .Cells(CurRow, 10) = 0.1
-                    Else
-                        .Cells(CurRow, 8) = 1.2
-                        .Cells(CurRow, 10) = 0.025
-                    End If
-                    .Cells(CurRow, 8).NumberFormat = "0.0"
-                    .Cells(CurRow, 10).NumberFormat = "0.000"
-                    .Cells(CurRow, 9) = dia(j) / 12
-                    .Cells(CurRow, 9).NumberFormat = "0.0000"
-                    CurRow = CurRow + 1
-                Next j
-
-                If i = NumLine Then
+                If i = NumLines Then
                     .Cells(CurRow, 1) = "END14NLID"
                 Else
                     .Cells(CurRow, 1) = "14NLID"
                 End If
                 .Cells(CurRow, 2) = 1
-                .Cells(CurRow, 3) = Sheets("Summary").Cells(i + 26, 3)
+                .Cells(CurRow, 3) = 9500 + i 'JLIUTODO, anchor node
                 .Cells(CurRow, 4) = 0
-                .Cells(CurRow, 5) = Sheets("Summary").Cells(i + 26, 4)
+                .Cells(CurRow, 5) = 9100 + i 'JLIUTODO fairlead node
                 CurRow = CurRow + 1
-                End With
-        Next i
+            Next i
 
-        Close FileNum
+        End With
+        With oxApp.Sheets("anchor")
+            .Range("A1:F50").clear()
 
-End Sub
+            .cells.font.name = "Courier New"
+            .cells.font.size = 9
+
+            Dim CurRow As Integer
+            CurRow = 1
+            For i = 1 To NumLines
+                .Cells(i, 1) = "01" & 9500 + i
+                .Cells(i, 4) = oVessel.MoorSystem.MoorLines(i).Anchor.Xg * LFactor
+                .Cells(i, 5) = oVessel.MoorSystem.MoorLines(i).Anchor.Yg * LFactor
+                .Cells(i, 6) = -oVessel.MoorSystem.MoorLines(i).WaterDepth
+
+            Next
+        End With
+    End Sub
 
 
 
