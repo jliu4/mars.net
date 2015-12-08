@@ -25,9 +25,8 @@ Friend Class MoorSystem
     Private mclsStiffGlob As Force
     Private mclsStiffLocl As Force
 
-    'UPGRADE_NOTE: Class_Initialize was upgraded to Class_Initialize_Renamed. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"'
-    Private Sub Class_Initialize_Renamed()
-
+    Public Sub New()
+        MyBase.New()
         mclsShipGlob = New ShipGlobal
 
         msngWinchCap = 0#
@@ -38,34 +37,16 @@ Friend Class MoorSystem
 
         mclsStiffGlob = New Force
         mclsStiffLocl = New Force
-
-    End Sub
-    Public Sub New()
-        MyBase.New()
-        Class_Initialize_Renamed()
     End Sub
 
-    'UPGRADE_NOTE: Class_Terminate was upgraded to Class_Terminate_Renamed. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"'
-    Private Sub Class_Terminate_Renamed()
-
-        'UPGRADE_NOTE: Object mclsShipGlob may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+    Protected Overrides Sub Finalize()
         mclsShipGlob = Nothing
-
-        'UPGRADE_NOTE: Object mcolMoorLines may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         mcolMoorLines = Nothing
-        'UPGRADE_NOTE: Object mclsFMoorGlob may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         mclsFMoorGlob = Nothing
-        'UPGRADE_NOTE: Object mclsFMoorLocl may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         mclsFMoorLocl = Nothing
-
-        'UPGRADE_NOTE: Object mclsStiffGlob may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         mclsStiffGlob = Nothing
-        'UPGRADE_NOTE: Object mclsStiffLocl may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         mclsStiffLocl = Nothing
 
-    End Sub
-    Protected Overrides Sub Finalize()
-        Class_Terminate_Renamed()
         MyBase.Finalize()
     End Sub
 
@@ -78,7 +59,6 @@ Friend Class MoorSystem
         End Get
         Set(ByVal Value As Single)
 
-            'UPGRADE_NOTE: MoorLine was upgraded to MoorLine_Renamed. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"'
             Dim MoorLine_Renamed As MoorLine
 
             msngShipDraft = Value
@@ -159,7 +139,6 @@ Friend Class MoorSystem
 
     Public ReadOnly Property MoorLines(ByVal vntIndexKey As Object) As MoorLine
         Get
-            'UPGRADE_WARNING: Couldn't resolve default property of object vntIndexKey. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
             If vntIndexKey > 0 Then
                 MoorLines = mcolMoorLines.Item(vntIndexKey)
             End If
@@ -219,6 +198,7 @@ Friend Class MoorSystem
         Dim E1, BS, E2 As Single
         Dim Buoy, DryWt, WetWt, BuoyL As Single
         Dim FrCoef As Single
+        Dim fairLeadNode, anchorNode As Integer
 
         Dim WinchCap As Single
 
@@ -259,7 +239,12 @@ Friend Class MoorSystem
             Input(FileNum, AnchModel)
             Input(FileNum, HoldCap)
             Input(FileNum, AnchRemark)
-
+            ' If Input(FileNum, fairLeadNode) Is vbNull Then
+            'fairLeadNode = 9500 + i
+            ' End If
+            'If Input(FileNum, anchorNode) Is vbNull Then
+            'anchorNode = 9100 + i
+            ' End If
             With NewMoorLine
                 .Draft = msngShipDraft
                 .DesScope = Scope
@@ -269,8 +254,10 @@ Friend Class MoorSystem
                 .FairLead.Xs = FLX
                 .FairLead.Ys = FLY
                 .FairLead.z = FLZ
+                .FairLead.Node = 9100 + i 'default JLIU TODO
                 .Anchor.Xg = AnchorX
                 .Anchor.Yg = AnchorY
+                .Anchor.Node = 9500 + i ' Jliu TODO
                 .WaterDepth = WaterDepth
                 .BottomSlope = CDbl(Val(BtmSlp)) * Degrees2Radians
 

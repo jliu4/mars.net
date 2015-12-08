@@ -212,7 +212,11 @@
         Me._lblAnchor_1 = New System.Windows.Forms.Label()
         Me._lblAnchor_0 = New System.Windows.Forms.Label()
         Me.fraFairLead = New System.Windows.Forms.GroupBox()
+        Me._txtFL_3 = New System.Windows.Forms.TextBox()
+        Me._txtFL_4 = New System.Windows.Forms.TextBox()
         Me._txtFL_2 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me._txtFL_1 = New System.Windows.Forms.TextBox()
         Me._txtFL_0 = New System.Windows.Forms.TextBox()
         Me._lblLengthUnit_7 = New System.Windows.Forms.Label()
@@ -258,6 +262,7 @@
         Me.mnuDelete = New System.Windows.Forms.ToolStripMenuItem()
         Me.tabMoorLines = New System.Windows.Forms.TabControl()
         Me.Tab1 = New System.Windows.Forms.TabPage()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Frame1.SuspendLayout()
         Me.fraVesselLoc.SuspendLayout()
         Me.fraSegments.SuspendLayout()
@@ -289,6 +294,7 @@
         Me.MainMenu1.SuspendLayout()
         Me.tabMoorLines.SuspendLayout()
         Me.Tab1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnPayout
@@ -633,7 +639,7 @@
         Me.btnCatenary.BackColor = System.Drawing.SystemColors.Control
         Me.btnCatenary.Cursor = System.Windows.Forms.Cursors.Default
         Me.btnCatenary.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnCatenary.Location = New System.Drawing.Point(89, 10)
+        Me.btnCatenary.Location = New System.Drawing.Point(95, 18)
         Me.btnCatenary.Name = "btnCatenary"
         Me.btnCatenary.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnCatenary.Size = New System.Drawing.Size(74, 25)
@@ -649,10 +655,10 @@
         Me.fraSegments.Controls.Add(Me._lblSegCmt_0)
         Me.fraSegments.Controls.Add(Me._lblSegCmt_1)
         Me.fraSegments.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.fraSegments.Location = New System.Drawing.Point(12, 298)
+        Me.fraSegments.Location = New System.Drawing.Point(12, 315)
         Me.fraSegments.Name = "fraSegments"
         Me.fraSegments.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.fraSegments.Size = New System.Drawing.Size(789, 226)
+        Me.fraSegments.Size = New System.Drawing.Size(786, 206)
         Me.fraSegments.TabIndex = 61
         Me.fraSegments.TabStop = False
         Me.fraSegments.Text = "Properties of Line Segments :"
@@ -672,7 +678,7 @@
         Me.grdAnchor.Location = New System.Drawing.Point(4, 147)
         Me.grdAnchor.Name = "grdAnchor"
         Me.grdAnchor.RowHeadersVisible = False
-        Me.grdAnchor.Size = New System.Drawing.Size(759, 24)
+        Me.grdAnchor.Size = New System.Drawing.Size(759, 34)
         Me.grdAnchor.TabIndex = 69
         '
         'grdSegments
@@ -713,7 +719,7 @@
         Me._lblSegCmt_0.BackColor = System.Drawing.SystemColors.Control
         Me._lblSegCmt_0.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblSegCmt.SetIndex(Me._lblSegCmt_0, CType(0, Short))
-        Me._lblSegCmt_0.Location = New System.Drawing.Point(1, 193)
+        Me._lblSegCmt_0.Location = New System.Drawing.Point(0, 186)
         Me._lblSegCmt_0.Name = "_lblSegCmt_0"
         Me._lblSegCmt_0.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me._lblSegCmt_0.Size = New System.Drawing.Size(281, 17)
@@ -748,7 +754,7 @@
         Me.fraGeneral.Controls.Add(Me._lblGeneral_1)
         Me.fraGeneral.Controls.Add(Me._lblGeneral_0)
         Me.fraGeneral.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.fraGeneral.Location = New System.Drawing.Point(6, 54)
+        Me.fraGeneral.Location = New System.Drawing.Point(13, 92)
         Me.fraGeneral.Name = "fraGeneral"
         Me.fraGeneral.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.fraGeneral.Size = New System.Drawing.Size(185, 217)
@@ -879,7 +885,7 @@
         '
         Me.chkBatch.BackColor = System.Drawing.SystemColors.Control
         Me.chkBatch.Cursor = System.Windows.Forms.Cursors.Default
-        Me.chkBatch.Location = New System.Drawing.Point(617, 10)
+        Me.chkBatch.Location = New System.Drawing.Point(624, 26)
         Me.chkBatch.Name = "chkBatch"
         Me.chkBatch.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.chkBatch.Size = New System.Drawing.Size(177, 17)
@@ -918,7 +924,7 @@
         Me.btnRemove.BackColor = System.Drawing.SystemColors.Control
         Me.btnRemove.Cursor = System.Windows.Forms.Cursors.Default
         Me.btnRemove.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnRemove.Location = New System.Drawing.Point(10, 10)
+        Me.btnRemove.Location = New System.Drawing.Point(13, 15)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnRemove.Size = New System.Drawing.Size(73, 25)
@@ -955,7 +961,7 @@
         Me.fraTopTen.Controls.Add(Me._lblForceUnit_0)
         Me.fraTopTen.Controls.Add(Me._lblPreTen_0)
         Me.fraTopTen.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.fraTopTen.Location = New System.Drawing.Point(214, 54)
+        Me.fraTopTen.Location = New System.Drawing.Point(204, 92)
         Me.fraTopTen.Name = "fraTopTen"
         Me.fraTopTen.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.fraTopTen.Size = New System.Drawing.Size(205, 217)
@@ -1120,10 +1126,10 @@
         Me.fraAnchor.Controls.Add(Me._lblAnchor_1)
         Me.fraAnchor.Controls.Add(Me._lblAnchor_0)
         Me.fraAnchor.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.fraAnchor.Location = New System.Drawing.Point(614, 46)
+        Me.fraAnchor.Location = New System.Drawing.Point(609, 92)
         Me.fraAnchor.Name = "fraAnchor"
         Me.fraAnchor.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.fraAnchor.Size = New System.Drawing.Size(192, 217)
+        Me.fraAnchor.Size = New System.Drawing.Size(192, 225)
         Me.fraAnchor.TabIndex = 49
         Me.fraAnchor.TabStop = False
         Me.fraAnchor.Text = "Anchor Location :"
@@ -1315,7 +1321,11 @@
         'fraFairLead
         '
         Me.fraFairLead.BackColor = System.Drawing.SystemColors.Control
+        Me.fraFairLead.Controls.Add(Me._txtFL_3)
+        Me.fraFairLead.Controls.Add(Me._txtFL_4)
         Me.fraFairLead.Controls.Add(Me._txtFL_2)
+        Me.fraFairLead.Controls.Add(Me.Label10)
+        Me.fraFairLead.Controls.Add(Me.Label12)
         Me.fraFairLead.Controls.Add(Me._txtFL_1)
         Me.fraFairLead.Controls.Add(Me._txtFL_0)
         Me.fraFairLead.Controls.Add(Me._lblLengthUnit_7)
@@ -1330,13 +1340,43 @@
         Me.fraFairLead.Controls.Add(Me._lblFLUnit_0)
         Me.fraFairLead.Controls.Add(Me._lblFL_0)
         Me.fraFairLead.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.fraFairLead.Location = New System.Drawing.Point(425, 54)
+        Me.fraFairLead.Location = New System.Drawing.Point(415, 92)
         Me.fraFairLead.Name = "fraFairLead"
         Me.fraFairLead.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.fraFairLead.Size = New System.Drawing.Size(183, 217)
         Me.fraFairLead.TabIndex = 37
         Me.fraFairLead.TabStop = False
         Me.fraFairLead.Text = "Fair Lead Location :"
+        '
+        '_txtFL_3
+        '
+        Me._txtFL_3.AcceptsReturn = True
+        Me._txtFL_3.BackColor = System.Drawing.SystemColors.Window
+        Me._txtFL_3.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me._txtFL_3.ForeColor = System.Drawing.SystemColors.WindowText
+        Me._txtFL_3.ImeMode = System.Windows.Forms.ImeMode.Off
+        Me._txtFL_3.Location = New System.Drawing.Point(131, 156)
+        Me._txtFL_3.Name = "_txtFL_3"
+        Me._txtFL_3.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me._txtFL_3.Size = New System.Drawing.Size(49, 20)
+        Me._txtFL_3.TabIndex = 76
+        Me._txtFL_3.Text = "0"
+        Me._txtFL_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        '_txtFL_4
+        '
+        Me._txtFL_4.AcceptsReturn = True
+        Me._txtFL_4.BackColor = System.Drawing.SystemColors.Window
+        Me._txtFL_4.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me._txtFL_4.ForeColor = System.Drawing.SystemColors.WindowText
+        Me._txtFL_4.ImeMode = System.Windows.Forms.ImeMode.Off
+        Me._txtFL_4.Location = New System.Drawing.Point(131, 182)
+        Me._txtFL_4.Name = "_txtFL_4"
+        Me._txtFL_4.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me._txtFL_4.Size = New System.Drawing.Size(49, 20)
+        Me._txtFL_4.TabIndex = 76
+        Me._txtFL_4.Text = "0"
+        Me._txtFL_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         '_txtFL_2
         '
@@ -1352,6 +1392,30 @@
         Me._txtFL_2.TabIndex = 45
         Me._txtFL_2.Text = "0"
         Me._txtFL_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label10
+        '
+        Me.Label10.BackColor = System.Drawing.SystemColors.Control
+        Me.Label10.Cursor = System.Windows.Forms.Cursors.Default
+        Me.Label10.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label10.Location = New System.Drawing.Point(10, 185)
+        Me.Label10.Name = "Label10"
+        Me.Label10.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Label10.Size = New System.Drawing.Size(115, 18)
+        Me.Label10.TabIndex = 41
+        Me.Label10.Text = "Anchor Aqwa Node"
+        '
+        'Label12
+        '
+        Me.Label12.BackColor = System.Drawing.SystemColors.Control
+        Me.Label12.Cursor = System.Windows.Forms.Cursors.Default
+        Me.Label12.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label12.Location = New System.Drawing.Point(10, 159)
+        Me.Label12.Name = "Label12"
+        Me.Label12.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Label12.Size = New System.Drawing.Size(117, 20)
+        Me.Label12.TabIndex = 38
+        Me.Label12.Text = "Fair Lead Aqwa Node"
         '
         '_txtFL_1
         '
@@ -1374,9 +1438,11 @@
         Me._txtFL_0.BackColor = System.Drawing.SystemColors.Window
         Me._txtFL_0.Cursor = System.Windows.Forms.Cursors.IBeam
         Me._txtFL_0.ForeColor = System.Drawing.SystemColors.WindowText
+        Me._txtFL_0.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.txtFL.SetIndex(Me._txtFL_0, CType(0, Short))
         Me._txtFL_0.Location = New System.Drawing.Point(57, 25)
         Me._txtFL_0.Name = "_txtFL_0"
+        Me._txtFL_0.ReadOnly = True
         Me._txtFL_0.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me._txtFL_0.Size = New System.Drawing.Size(49, 20)
         Me._txtFL_0.TabIndex = 39
@@ -1453,7 +1519,7 @@
         Me._lblFLCmt_1.BackColor = System.Drawing.SystemColors.Control
         Me._lblFLCmt_1.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblFLCmt.SetIndex(Me._lblFLCmt_1, CType(1, Short))
-        Me._lblFLCmt_1.Location = New System.Drawing.Point(37, 164)
+        Me._lblFLCmt_1.Location = New System.Drawing.Point(6, 102)
         Me._lblFLCmt_1.Name = "_lblFLCmt_1"
         Me._lblFLCmt_1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me._lblFLCmt_1.Size = New System.Drawing.Size(9, 17)
@@ -1465,7 +1531,7 @@
         Me._lblFLCmt_0.BackColor = System.Drawing.SystemColors.Control
         Me._lblFLCmt_0.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblFLCmt.SetIndex(Me._lblFLCmt_0, CType(0, Short))
-        Me._lblFLCmt_0.Location = New System.Drawing.Point(41, 126)
+        Me._lblFLCmt_0.Location = New System.Drawing.Point(26, 102)
         Me._lblFLCmt_0.Name = "_lblFLCmt_0"
         Me._lblFLCmt_0.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me._lblFLCmt_0.Size = New System.Drawing.Size(105, 41)
@@ -1606,14 +1672,8 @@
         '
         'Tab1
         '
-        Me.Tab1.Controls.Add(Me.btnRemove)
-        Me.Tab1.Controls.Add(Me.btnCatenary)
-        Me.Tab1.Controls.Add(Me.fraGeneral)
-        Me.Tab1.Controls.Add(Me.chkBatch)
-        Me.Tab1.Controls.Add(Me.fraSegments)
-        Me.Tab1.Controls.Add(Me.fraTopTen)
-        Me.Tab1.Controls.Add(Me.fraFairLead)
-        Me.Tab1.Controls.Add(Me.fraAnchor)
+        Me.Tab1.Controls.Add(Me.Panel1)
+        Me.Tab1.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.Tab1.Location = New System.Drawing.Point(4, 22)
         Me.Tab1.Name = "Tab1"
         Me.Tab1.Padding = New System.Windows.Forms.Padding(3)
@@ -1621,6 +1681,21 @@
         Me.Tab1.TabIndex = 0
         Me.Tab1.Text = "Line 1"
         Me.Tab1.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.fraGeneral)
+        Me.Panel1.Controls.Add(Me.fraSegments)
+        Me.Panel1.Controls.Add(Me.chkBatch)
+        Me.Panel1.Controls.Add(Me.btnCatenary)
+        Me.Panel1.Controls.Add(Me.btnRemove)
+        Me.Panel1.Controls.Add(Me.fraAnchor)
+        Me.Panel1.Controls.Add(Me.fraFairLead)
+        Me.Panel1.Controls.Add(Me.fraTopTen)
+        Me.Panel1.Location = New System.Drawing.Point(3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(795, 521)
+        Me.Panel1.TabIndex = 83
         '
         'frmMoorLines
         '
@@ -1683,6 +1758,7 @@
         Me.MainMenu1.PerformLayout()
         Me.tabMoorLines.ResumeLayout(False)
         Me.Tab1.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1692,5 +1768,10 @@
     Friend WithEvents grdAnchor As DataGridView
     Friend WithEvents tabMoorLines As TabControl
     Friend WithEvents Tab1 As TabPage
+    Public WithEvents Label10 As Label
+    Public WithEvents Label12 As Label
+    Public WithEvents _txtFL_4 As TextBox
+    Public WithEvents _txtFL_3 As TextBox
+    Friend WithEvents Panel1 As Panel
 #End Region
 End Class

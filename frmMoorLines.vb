@@ -278,16 +278,20 @@ Errhandler:
         MsgBox("Error saving: " & Err.Description, MsgBoxStyle.Information + MsgBoxStyle.OkOnly, "Error")
     End Sub
 
-    Private Sub tabMoorLines_ClickEvent(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs)
+    Private Sub tabMoorLines_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) _
+        Handles tabMoorLines.SelectedIndexChanged
 
         Dim SelLine As Short
 
         If Not Updated Then UpdateMoorData()
 
         SelLine = tabMoorLines.SelectedIndex
-        If SelLine <> CurLine Then
-            CurLine = SelLine
+
+        If SelLine + 1 <> CurLine Then
+            CurLine = SelLine + 1
+
             LoadMoorData()
+            tabMoorLines.TabPages(SelLine).Controls.Add(Me.Panel1)
         End If
 
     End Sub
@@ -422,9 +426,11 @@ Errhandler:
             .FairLead.Xs = MoorLine_Renamed.FairLead.Xs
             .FairLead.Ys = MoorLine_Renamed.FairLead.Ys
             .FairLead.z = MoorLine_Renamed.FairLead.z
+            .FairLead.node = MoorLine_Renamed.FairLead.node
 
             .Anchor.Xg = MoorLine_Renamed.Anchor.Xg
             .Anchor.Yg = MoorLine_Renamed.Anchor.Yg
+            .Anchor.Node = MoorLine_Renamed.Anchor.Node
             .WaterDepth = MoorLine_Renamed.WaterDepth
 
             .Anchor.HoldCap = MoorLine_Renamed.Anchor.HoldCap
@@ -607,7 +613,8 @@ Errhandler:
             .Anchor.Yg = CDbl(txtAnchor(1).Text) / LFactor
             .FairLead.Xs = CDbl(txtFL(0).Text) / LFactor
             .FairLead.Ys = CDbl(txtFL(1).Text) / LFactor
-
+            .FairLead.Node = CInt(_txtFL_3.Text)
+            .Anchor.Node = CInt(_txtFL_4.Text)
             txtGeneral(1).Text = VB6.Format(.ScopeByVesselLocation(ShipDesLoc, True) * LFactor, "0.000")
             txtGeneral(0).Text = VB6.Format(.SprdAngle(ShipDesLoc, True) * Radians2Degrees, "0.000")
         End With
@@ -971,7 +978,9 @@ Errhandler:
 
         If NumLines > NumTab Then
             For i = NumTab + 1 To NumLines
+
                 tabMoorLines.TabPages.Add(i, "Line" & i)
+
             Next
         End If
 
@@ -997,6 +1006,7 @@ Errhandler:
     ' operation subroutines
     ' load to and update from form
     Private Sub LoadMoorData(Optional ByVal FirstTime As Boolean = False)
+        On Error GoTo Errhandler
         If IsMetricUnit Then
             LFactor = 0.3048 ' ft -> m
             FrcFactor = 4.448222 ' kips -> KN
@@ -1049,7 +1059,8 @@ Errhandler:
             txtFL(0).Text = VB6.Format(.FairLead.Xs * LFactor, "0.000")
             txtFL(1).Text = VB6.Format(.FairLead.Ys * LFactor, "0.000")
             txtFL(2).Text = VB6.Format(.FairLead.z * LFactor, "0.000")
-
+            _txtFL_3.Text = VB6.Format(.FairLead.Node, "0")
+            _txtFL_4.Text = VB6.Format(.Anchor.Node, "0")
             '       general
             ' ????? .FairLead.SprdAngle = 0 will cause actual 0 deg angle to be changed to 180 deg ??????
             If .FairLead.SprdAngle = 0# Then
@@ -1122,6 +1133,10 @@ Errhandler:
 
         Updated = True
         TenCalc = False
+        Exit Sub
+Errhandler:
+        MsgBox("Error " & Err.Description, MsgBoxStyle.Critical, "Error")
+
 
         '   If Val(txtTopTen.Text) < 0.9 Then btnTopTension_Click
 
@@ -1246,6 +1261,8 @@ Errhandler:
             .FairLead.Xs = CDbl(txtFL(0).Text) / LFactor
             .FairLead.Ys = CDbl(txtFL(1).Text) / LFactor
             .FairLead.z = CDbl(txtFL(2).Text) / LFactor
+            .FairLead.Node = CInt(_txtFL_3.Text)
+            .Anchor.Node = CInt(_txtFL_4.Text)
             '     GetScopeSprd Scope, SprdAng, HD, Dir, .FairLead.Xs, .FairLead.Ys
             .FairLead.SprdAngle = SprdAng
 
@@ -1326,6 +1343,7 @@ Errhandler:
         Updated = True
 
     End Function
+
 
     ' operation subroutines
     ' load form and save to project
@@ -1486,9 +1504,11 @@ Errhandler:
                 .FairLead.Xs = MoorLine_Renamed.FairLead.Xs
                 .FairLead.Ys = MoorLine_Renamed.FairLead.Ys
                 .FairLead.z = MoorLine_Renamed.FairLead.z
+                .FairLead.node = MoorLine_Renamed.FairLead.node
 
                 .Anchor.Xg = MoorLine_Renamed.Anchor.Xg
                 .Anchor.Yg = MoorLine_Renamed.Anchor.Yg
+                .Anchor.Node = MoorLine_Renamed.Anchor.Node
                 .WaterDepth = MoorLine_Renamed.WaterDepth
 
                 .Anchor.HoldCap = MoorLine_Renamed.Anchor.HoldCap

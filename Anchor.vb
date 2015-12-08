@@ -14,13 +14,13 @@ Friend Class Anchor
 	
 	Private mblnNeedUpdate As Boolean
 	Private msngXg As Single
-	Private msngYg As Single
-	Private msngHoldCap As Single
+    Private msngYg As Single
+    Private msngNode As Integer 'node in the aqwa model and default as 910i
+    Private msngHoldCap As Single
 	Private mstrModel As String
 	Private mstrRemark As String
-	
-	
-	Friend Property NeedUpdate() As Boolean
+
+    Friend Property NeedUpdate() As Boolean
 		Get
 			
 			NeedUpdate = mblnNeedUpdate
@@ -32,9 +32,8 @@ Friend Class Anchor
 			
 		End Set
 	End Property
-	
-	
-	Public Property Xg() As Single
+
+    Public Property Xg() As Single
 		Get
 			
 			Xg = msngXg
@@ -47,24 +46,37 @@ Friend Class Anchor
 			
 		End Set
 	End Property
-	
-	
-	Public Property Yg() As Single
-		Get
-			
-			Yg = msngYg
-			
-		End Get
-		Set(ByVal Value As Single)
-			
-			msngYg = Value
-			mblnNeedUpdate = True
-			
-		End Set
-	End Property
-	
-	
-	Public Property HoldCap() As Single
+
+    Public Property Yg() As Single
+        Get
+
+            Yg = msngYg
+
+        End Get
+        Set(ByVal Value As Single)
+
+            msngYg = Value
+            mblnNeedUpdate = True
+
+        End Set
+    End Property
+
+    Public Property Node() As Integer
+        Get
+
+            Node = msngNode
+
+        End Get
+        Set(ByVal Value As Integer)
+
+            msngNode = Value
+            mblnNeedUpdate = True
+
+        End Set
+    End Property
+
+
+    Public Property HoldCap() As Single
 		Get
 			
 			HoldCap = msngHoldCap

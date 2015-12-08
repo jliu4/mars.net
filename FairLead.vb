@@ -17,10 +17,11 @@ Friend Class FairLead
 	Private msngSprdAngle As Single
 	Private msngXs As Single
 	Private msngYs As Single
-	Private msngZ As Single
-	
-	
-	Friend Property NeedUpdate() As Boolean
+    Private msngZ As Single
+    Private msngNode As Integer 'node in the aqwa model, default as 950i
+
+
+    Friend Property NeedUpdate() As Boolean
 		Get
 			
 			NeedUpdate = mblnNeedUpdate
@@ -108,18 +109,31 @@ Friend Class FairLead
 			
 		End Set
 	End Property
-	
-	
-	Public Property z() As Single
-		Get
-			
-			z = msngZ
-			
-		End Get
-		Set(ByVal Value As Single)
-			
-			msngZ = Value
-			
-		End Set
-	End Property
+
+
+    Public Property z() As Single
+        Get
+
+            z = msngZ
+
+        End Get
+        Set(ByVal Value As Single)
+
+            msngZ = Value
+
+        End Set
+    End Property
+
+    Public Property Node() As Integer
+        Get
+
+            Node = msngNode
+
+        End Get
+        Set(ByVal Value As Integer)
+
+            msngNode = Value
+
+        End Set
+    End Property
 End Class

@@ -19,8 +19,8 @@ Friend Class MoorLine
     ' mooring line properties
     ' name:         mooring line name
     ' Segments:     mooring line segments
-    ' FairLead:     fairlead location
-    ' Anchor:       anchor location
+    ' FairLead:     fairlead location & node (default 950i)
+    ' Anchor:       anchor location & node (default 910i)
     ' Payout:       payout of the 1st segment (rig wire)
     ' PayoutSur:    payout at survival draft
     ' PayoutOpr:    payout at operating draft
