@@ -20,7 +20,9 @@ Friend Class frmCatenary
     ' form load and unload
 
     Private Sub frmCatenary_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
+
         cboSegment.Visible = False
+
         grdDetails.Controls.Add(cboSegment)
 
         AddHandler grdDetails.ColumnHeaderMouseClick, AddressOf grdDetails_ColumnHeaderMouseClick
@@ -80,7 +82,7 @@ Friend Class frmCatenary
                 .Columns(c).HeaderText = DetailLabelC(c)
 
             Next c
-            '.Columns(.ColumnCount - 2).HeaderCell = cboSegment
+
             For r = 0 To .RowCount - 1
                 .Rows(r).Cells(0).Value = DetailLabelR(r + 1)
             Next
@@ -158,7 +160,7 @@ Friend Class frmCatenary
                 .Rows(3).Cells(cboSegmentColIndex).Value = VB6.Format(SegAngle(ID + 1) * Radians2Degrees, "0.00")
                 .Rows(4).Cells(cboSegmentColIndex).Value = VB6.Format(SegPosition(ID + 1) * LFactor, "0.0")
             End With
-            ' if the column is the last one of DataGridView, add a new row
+
         End If
 
     End Sub
@@ -201,15 +203,12 @@ Friend Class frmCatenary
 
         Select Case LastChanged
             Case 1
-                ' txtTopTen.Text = VB6.Format(CheckData(txtTopTen.Text), "0.00")
-                'TopTension = CDbl(txtTopTen.Text) * 1000# / FrcFactor
 
                 Call frmMoorLines.UpdateCat(TopTension)
                 frmMoorLines.ChangeInCat = True
             Case 2
-                '			txtHorFrc.Text = VB6.Format(CheckData(txtHorFrc.Text), "0.00")
+
                 TopTension = 0#
-                '				HorForce = CDbl(txtHorFrc.Text) * 1000# / FrcFactor
 
                 Call frmMoorLines.UpdateCat(TopTension, HorForce)
                 frmMoorLines.ChangeInCat = True
@@ -218,8 +217,6 @@ Friend Class frmCatenary
     End Sub
 
     ' combo box
-
-    'UPGRADE_WARNING: Event cboLines.SelectedIndexChanged may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
     Private Sub cboLines_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cboLines.SelectedIndexChanged
 
         If InitiateCbo Then Exit Sub
@@ -230,7 +227,6 @@ Friend Class frmCatenary
 
     End Sub
 
-    'UPGRADE_WARNING: Event cboSegment.SelectedIndexChanged may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
     Private Sub cboSegment_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As DataGridViewCellMouseEventArgs)
 
         If IsMetricUnit Then
@@ -368,7 +364,7 @@ Friend Class frmCatenary
         With cboLines
             .Items.Clear()
             For i = 1 To NumLines
-                .Items.Add("Line " & i)
+                .Items.Add("Line " & i) 'TODO JLIU, it should be the name of line
             Next i
             .SelectedIndex = CurLine - 1
         End With
@@ -399,10 +395,8 @@ Friend Class frmCatenary
             .Rows(0).Cells(1).Value = VB6.Format(TopLength * LFactor, "0.0")
 
             .Rows(1).Cells(1).Value = VB6.Format(TopTension * 0.001 * FrcFactor, "0.00")
-            'txtTopTen.Text = .Text
 
             .Rows(2).Cells(1).Value = VB6.Format(TopTension * 0.001 * System.Math.Cos(TopAngle) * FrcFactor, "0.00")
-            ' txtHorFrc.Text = .Text
 
             .Rows(3).Cells(1).Value = VB6.Format(TopAngle * Radians2Degrees, "0.00")
 
@@ -416,7 +410,6 @@ Friend Class frmCatenary
 
         End With
 
-
         Xmax = CatX(1) * LFactor
         Xmin = 0#
         Ymax = Max(CatY(1) * LFactor, 0#)
@@ -427,7 +420,7 @@ Friend Class frmCatenary
         Color(0) = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Yellow)
         'find drawing scales
 
-        'Call drawAxis(Xmax, Xmin, Ymax, Ymin, "Distance" & LUnit, "Depth" & LUnit, picCatenary, False)
+        Call drawAxis(Xmax, Xmin, Ymax, Ymin, "Distance" & LUnit, "Depth" & LUnit, picCatenary, False)
 
         FileClose(FileNumRes)
         '    Open MarsDir & "catenary.dat" For Output Access Write As #FileNumRes
@@ -444,7 +437,7 @@ Friend Class frmCatenary
                     WriteLine(FileNumRes, X(j), Y(j))
                 End If
             Next j
-            Call DrawLine0(X, Y, NumPoints, picCatenary)
+            Call DrawLine(X, Y, NumPoints, 0, picCatenary)
         Next i
 
         FileClose(FileNumRes)
